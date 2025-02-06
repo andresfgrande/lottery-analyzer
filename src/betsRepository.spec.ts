@@ -1,8 +1,8 @@
-import { MongoService } from './context/shared/services/mongoService';
+import { MongoService } from './context/shared/services/mongo.service';
 import { MongoClient } from 'mongodb';
 import { Test, TestingModule } from '@nestjs/testing';
-import { LotteryRepository } from './context/shared/infrastructure/lotteryRepository';
-import { Bet } from './context/shared/domain/bet';
+import { BetsRepository } from './context/bets/infrastructure/betsRepository';
+import { Bet } from './context/bets/domain/bet';
 
 describe('LotteryService should', () => {
   let mongoService: MongoService;
@@ -28,7 +28,7 @@ describe('LotteryService should', () => {
   });
 
   it('be able to save a new element', async () => {
-    const lotteryRepository = new LotteryRepository(mongoService);
+    const lotteryRepository = new BetsRepository(mongoService);
     const bet: Bet = {
       idBet: 'test1',
       number: 12345,

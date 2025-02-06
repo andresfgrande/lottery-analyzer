@@ -1,19 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { MongoService } from './context/shared/services/mongoService';
-import { LotteryRepository } from './context/shared/infrastructure/lotteryRepository';
-import { MongoClient } from 'mongodb';
+import { ApiModule } from './api/api.module';
+import { SharedModule } from './context/shared/shared.module';
 
-const mongoClient = {
-  provide: MongoClient,
-  useFactory: async () => {
-    return new MongoClient('mongodb://localhost:27017/lottery');
-  },
-};
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [mongoClient, MongoService, LotteryRepository, AppService],
+  imports: [ApiModule, SharedModule],
 })
 export class AppModule {}
