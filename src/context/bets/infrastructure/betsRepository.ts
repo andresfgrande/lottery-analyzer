@@ -1,6 +1,7 @@
 import { MongoService } from '../../shared/services/mongo.service';
-import { Bet } from '../domain/bet';
 import { Injectable } from '@nestjs/common';
+
+import { Bet } from '../domain/bet';
 
 @Injectable()
 export class BetsRepository {
@@ -10,6 +11,6 @@ export class BetsRepository {
     await this.mongoService
       .getDatabase()
       .collection('bets')
-      .updateOne({ idBet: bet.idBet }, { $set: bet }, { upsert: true });
+      .updateOne({ betId: bet.getBetId() }, { $set: bet.toPrimitives() }, { upsert: true });
   }
 }

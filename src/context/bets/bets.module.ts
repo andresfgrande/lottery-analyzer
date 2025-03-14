@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { BetsService } from './services/bets.service';
+import { CreateBetService } from './services/createBet.service';
 import { BetsRepository } from './infrastructure/betsRepository';
 import { SharedModule } from '../shared/shared.module';
 
 @Module({
   imports: [SharedModule],
-  providers: [BetsService, BetsRepository],
-  exports: [BetsService],
+  providers: [CreateBetService, BetsRepository],
+  exports: [CreateBetService],
 })
 export class BetsModule {}

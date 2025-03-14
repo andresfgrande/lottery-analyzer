@@ -1,9 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
-import { BetsService } from '../../context/bets/services/bets.service';
+import { CreateBetService } from '../../context/bets/services/createBet.service';
 
 @Controller('bets')
 export class BetsController {
-  constructor(private createBetService: BetsService) {}
+  constructor(private createBetService: CreateBetService) {}
 
   @Get()
   getHelloBet() {
