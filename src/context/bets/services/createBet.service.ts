@@ -6,6 +6,7 @@ import { CreationDate } from '../domain/creationDate';
 import { BetId } from '../domain/betId';
 import { Bet } from '../domain/bet';
 import { v4 as uuidv4 } from 'uuid';
+import { BetNumbers } from '../domain/betNumbers';
 
 @Injectable()
 export class CreateBetService {
@@ -16,7 +17,7 @@ export class CreateBetService {
     const bet = new Bet(new BetId(uuidv4()),
       new CreationDate(this.dateGenerator.getDate()),
       createBetRequest.previousResults,
-      []
+      new BetNumbers()
     );
 
     await this.betsRepository.save(bet);

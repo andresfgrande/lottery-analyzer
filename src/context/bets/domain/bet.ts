@@ -1,24 +1,26 @@
 import { BetId } from './betId';
 import { CreationDate } from './creationDate';
+import { BetNumberPrimitives } from './betNumber';
+import { BetNumbers } from './betNumbers';
 
 export interface BetPrimitives {
   betId: string;
   creationDate: string;
   previousResults: string[];
-  betNumbers: string[];
+  betNumbers: BetNumberPrimitives[];
 }
 
 export class Bet {
   private betId: BetId;
   private creationDate: CreationDate;
   private previousResults: string[];
-  private betNumbers: string[];
+  private betNumbers: BetNumbers;
 
   constructor(
     betId: BetId,
     creationDate: CreationDate,
     previousResults: string[],
-    betNumbers: string[],
+    betNumbers: BetNumbers,
   ) {
     this.betId = betId;
     this.creationDate = creationDate;
@@ -35,7 +37,7 @@ export class Bet {
       betId: this.betId.toString(),
       creationDate: this.creationDate.toString(),
       previousResults: this.previousResults,
-      betNumbers: this.betNumbers,
+      betNumbers: this.betNumbers.toPrimitives(),
     };
   }
 }
