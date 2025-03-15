@@ -23,8 +23,11 @@ export class BetNumbers {
           new MiddleNumber(betNumberPrimitives.middle),
           new NumberPair(betNumberPrimitives.lastPair)
         )
-
       })
     return new BetNumbers(betNumbersList);
+  }
+
+  addBetNumber(betNumber: BetNumber): void {
+    this.numbers.push(betNumber);
   }
 }

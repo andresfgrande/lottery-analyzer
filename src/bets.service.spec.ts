@@ -1,4 +1,4 @@
-import { CreateBetService } from './context/bets/services/createBet.service';
+import { CreateBetRequest, CreateBetService } from './context/bets/services/createBet.service';
 import { mock } from 'jest-mock-extended';
 import { BetsRepository } from './context/bets/infrastructure/betsRepository';
 import { DateGenerator } from './context/bets/infrastructure/dateGenerator';
@@ -13,11 +13,6 @@ export interface CreateBetRequestDto {
   previousResults: string[];
   generateBet: boolean;
 }
-export interface CreateBetRequest {
-  previousResults: string[];
-  generateBet: boolean;
-}
-
 export interface GetBetRequestDto {
   betId: string;
 }
@@ -68,18 +63,31 @@ describe('BetsService', () => {
       previousResults: previousResults,
       generateBet: true,
     };
-    const excludedPairs = new Set(["12", "64", "79", "94", "22"]);
-    const betNumbers: BetNumberPrimitives[] = Array.from({ length: 100 }, (_, i) => {
+    const excludedFirstPairs = new Set(["12", "64", "79", "94", "22"]);
+    const excludedLastPairs = new Set(["45", "27", "76", "32", "84"]);
+    const betNumberPrimitives: BetNumberPrimitives[] = [];
+    for (let i = 0; i < 100; i++) {
       const firstPair = i.toString().padStart(2, "0");
-      return excludedPairs.has(firstPair)
-        ? null
-        : { firstPair, middle: "", lastPair: "" };
-    }).filter(Boolean) as BetNumberPrimitives[];
+      if (excludedFirstPairs.has(firstPair)) {
+        continue;
+      }
+      for (let j = 0; j < 100; j++) {
+        const lastPair = j.toString().padStart(2, "0");
+        if (excludedLastPairs.has(lastPair)) {
+          continue;
+        }
+        betNumberPrimitives.push({
+          firstPair,
+          middle: "",
+          lastPair
+        });
+      }
+    }
     const bet = new Bet(
       new BetId(uuidv4()),
       new CreationDate(dateGenerator.getDate()),
       previousResults,
-      BetNumbers.fromPrimitives(betNumbers),
+      BetNumbers.fromPrimitives(betNumberPrimitives),
     );
 
     await betsService.execute(createBetRequest);
