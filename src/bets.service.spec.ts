@@ -6,8 +6,7 @@ import { CreationDate } from './context/bets/domain/creationDate';
 import { BetId } from './context/bets/domain/betId';
 import { Bet } from './context/bets/domain/bet';
 import { v4 as uuidv4 } from 'uuid';
-import { BetNumberPrimitives } from './context/bets/domain/betNumber';
-import { BetNumbers } from './context/bets/domain/betNumbers';
+import { BetNumbers, BetNumbersPrimitives } from './context/bets/domain/betNumbers';
 
 export interface CreateBetRequestDto {
   previousResults: string[];
@@ -65,29 +64,29 @@ describe('BetsService', () => {
     };
     const excludedFirstPairs = new Set(["12", "64", "79", "94", "22"]);
     const excludedLastPairs = new Set(["45", "27", "76", "32", "84"]);
-    const betNumberPrimitives: BetNumberPrimitives[] = [];
+    const betNumbersPrimitives: BetNumbersPrimitives = {
+      firstPairNumbers: [],
+      lastPairNumbers: [],
+    } ;
     for (let i = 0; i < 100; i++) {
       const firstPair = i.toString().padStart(2, "0");
       if (excludedFirstPairs.has(firstPair)) {
         continue;
       }
-      for (let j = 0; j < 100; j++) {
-        const lastPair = j.toString().padStart(2, "0");
-        if (excludedLastPairs.has(lastPair)) {
-          continue;
-        }
-        betNumberPrimitives.push({
-          firstPair,
-          middle: "",
-          lastPair
-        });
+      betNumbersPrimitives.firstPairNumbers.push(firstPair);
+    }
+    for (let j = 0; j < 100; j++) {
+      const lastPair = j.toString().padStart(2, "0");
+      if (excludedLastPairs.has(lastPair)) {
+        continue;
       }
+      betNumbersPrimitives.lastPairNumbers.push(lastPair);
     }
     const bet = new Bet(
       new BetId(uuidv4()),
       new CreationDate(dateGenerator.getDate()),
       previousResults,
-      BetNumbers.fromPrimitives(betNumberPrimitives),
+      BetNumbers.fromPrimitives(betNumbersPrimitives),
     );
 
     await betsService.execute(createBetRequest);

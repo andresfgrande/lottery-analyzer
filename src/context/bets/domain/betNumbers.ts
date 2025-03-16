@@ -1,33 +1,53 @@
-import { BetNumber, BetNumberPrimitives } from './betNumber';
 import { NumberPair } from './numberPair';
-import { MiddleNumber } from './middleNumber';
+
+export interface BetNumbersPrimitives{
+  firstPairNumbers: string[];
+  lastPairNumbers: string[];
+}
 
 export class BetNumbers {
-  private numbers: BetNumber[];
+  private firstPairNumbers: NumberPair[];
+  private lastPairNumbers: NumberPair[];
 
-  constructor(numbers?: BetNumber[]) {
-    this.numbers = numbers ? numbers : [];
+  constructor(firstPairNumbers?: NumberPair[], lastPairNumbers?: NumberPair[]) {
+    this.firstPairNumbers = firstPairNumbers ? firstPairNumbers : [];
+    this.lastPairNumbers = lastPairNumbers ? lastPairNumbers : [];
   }
 
-  toPrimitives(): BetNumberPrimitives[] {
-    return this.numbers.map((betNumber) => {
-      return betNumber.toPrimitives();
+  toPrimitives(): BetNumbersPrimitives {
+
+    const firstPairNumbers = this.firstPairNumbers.map((num) => {
+      return num.toString();
     });
+
+    const lastPairNumbers = this.lastPairNumbers.map((num) => {
+      return num.toString();
+    });
+
+    return {
+      firstPairNumbers,
+      lastPairNumbers,
+    }
   }
 
-  static fromPrimitives(betNumbersPrimitives: BetNumberPrimitives[]): BetNumbers{
-    const betNumbersList:BetNumber [] =
-      betNumbersPrimitives.map((betNumberPrimitives) => {
-        return new BetNumber(
-          new NumberPair(betNumberPrimitives.firstPair),
-          new MiddleNumber(betNumberPrimitives.middle),
-          new NumberPair(betNumberPrimitives.lastPair)
-        )
-      })
-    return new BetNumbers(betNumbersList);
+  static fromPrimitives(betNumbersPrimitives: BetNumbersPrimitives): BetNumbers{
+    const firstPairNumbers = betNumbersPrimitives.
+    firstPairNumbers.map((num) => {
+      return new NumberPair(num);
+    });
+
+    const lastPairNumbers = betNumbersPrimitives.
+    lastPairNumbers.map((num) => {
+      return new NumberPair(num);
+    });
+    return new BetNumbers(firstPairNumbers, lastPairNumbers);
   }
 
-  addBetNumber(betNumber: BetNumber): void {
-    this.numbers.push(betNumber);
+  addBetNumberToFirstPair(numberPair: NumberPair): void {
+    this.firstPairNumbers.push(numberPair);
+  }
+
+  addBetNumberToLastPair(numberPair: NumberPair): void {
+    this.lastPairNumbers.push(numberPair);
   }
 }
