@@ -5,7 +5,7 @@ import { MongoClient } from 'mongodb';
 const mongoClient = {
   provide: MongoClient,
   useFactory: async () => {
-    return new MongoClient('mongodb://localhost:27017/');
+    return new MongoClient('mongodb://root:example@localhost:27017/');
   },
 };
 

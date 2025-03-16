@@ -8,14 +8,6 @@ import { Bet } from './context/bets/domain/bet';
 import { v4 as uuidv4 } from 'uuid';
 import { BetNumbers, BetNumbersPrimitives } from './context/bets/domain/betNumbers';
 
-export interface CreateBetRequestDto {
-  previousResults: string[];
-  generateBet: boolean;
-}
-export interface GetBetRequestDto {
-  betId: string;
-}
-
 jest.mock('uuid', () => ({
   v4: jest.fn(),
 }));

@@ -41,11 +41,24 @@ export class Bet {
     };
   }
 
-  generateBetNumbers(): void{
-    const excludedFirstPairs = new Set(this.previousResults.map((num)=>num.slice(0,2)));
-    const excludedLastPairs = new Set(this.previousResults.map((num)=>num.slice(-2)));
+  static fromPrimitives(betPrimitives: BetPrimitives): Bet {
+    return new Bet(
+      new BetId(betPrimitives.betId),
+      new CreationDate(betPrimitives.creationDate),
+      betPrimitives.previousResults,
+      BetNumbers.fromPrimitives(betPrimitives.betNumbers),
+    );
+  }
+
+  generateBetNumbers(): void {
+    const excludedFirstPairs = new Set(
+      this.previousResults.map((num) => num.slice(0, 2)),
+    );
+    const excludedLastPairs = new Set(
+      this.previousResults.map((num) => num.slice(-2)),
+    );
     for (let i = 0; i < 100; i++) {
-      const firstPair = i.toString().padStart(2, "0");
+      const firstPair = i.toString().padStart(2, '0');
       if (excludedFirstPairs.has(firstPair)) {
         continue;
       }
@@ -53,12 +66,11 @@ export class Bet {
     }
 
     for (let j = 0; j < 100; j++) {
-      const lastPair = j.toString().padStart(2, "0");
+      const lastPair = j.toString().padStart(2, '0');
       if (excludedLastPairs.has(lastPair)) {
         continue;
       }
       this.betNumbers.addBetNumberToLastPair(new NumberPair(lastPair));
     }
-
   }
 }
