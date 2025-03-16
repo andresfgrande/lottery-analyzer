@@ -12,11 +12,15 @@ export interface CreateBetRequest {
   generateBet: boolean;
 }
 
+export interface CreateBetResponse{
+  betId: string;
+}
+
 @Injectable()
 export class CreateBetService {
   constructor(private betsRepository: BetsRepository, private dateGenerator: DateGenerator) {}
 
-  async execute(createBetRequest: CreateBetRequest): Promise<void> {
+  async execute(createBetRequest: CreateBetRequest): Promise<CreateBetResponse> {
 
     const {previousResults, generateBet} = createBetRequest;
 
@@ -31,5 +35,9 @@ export class CreateBetService {
     }
 
     await this.betsRepository.save(bet);
+
+    return {
+      betId: bet.getBetId()
+    }
   }
 }

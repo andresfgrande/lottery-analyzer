@@ -81,9 +81,29 @@ describe('LotteryService should', () => {
       .deleteOne({ betId: bet.getBetId() });
   });
 
+  it('should retrieve a bet by id', async () => {
+    const betsRepository = new BetsRepository(mongoService);
+    const dateGenerator = new DateGenerator();
+    const previousResults: string[] = ['12345','64727','79176','94532','22984'];
+    const betId = new BetId(uuidv4());
+    const bet = new Bet(
+      betId,
+      new CreationDate(dateGenerator.getDate()),
+      previousResults,
+      new BetNumbers()
+    );
+    const expectedRetrievedBet = bet.toPrimitives();
+
+    await betsRepository.save(bet);
+
+    const retrievedBet = await betsRepository.get(betId);
+    expect(retrievedBet).toStrictEqual(bet);
+    await mongoService
+      .getDatabase()
+      .collection('bets')
+      .deleteOne({ betId: betId.toString() });
+  })
+
   //REMOVE
 
-  //UPDATE
-
-  //RETRIEVE
 });

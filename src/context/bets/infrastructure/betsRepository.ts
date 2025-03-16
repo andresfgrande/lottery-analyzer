@@ -20,7 +20,7 @@ export class BetsRepository {
   }
 
   async get(betId: BetId): Promise<Bet | undefined> {
-    /*const savedBet = await this.mongoService
+    const savedBet = await this.mongoService
       .getDatabase()
       .collection('bets')
       .findOne({ betId: betId.toString() });
@@ -39,8 +39,6 @@ export class BetsRepository {
       previousResults: savedBet.previousResults,
     };
 
-    return Bet.fromPrimitives(betPrimitives);*/
-    //TODO
-    return undefined;
+    return Bet.fromPrimitives(betPrimitives);
   }
 }

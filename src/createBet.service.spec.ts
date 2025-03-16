@@ -39,9 +39,10 @@ describe('BetsService', () => {
       new BetNumbers(),
     );
 
-    await betsService.execute(createBetRequest);
+    const betId = await betsService.execute(createBetRequest);
 
     expect(betsRepository.save).toHaveBeenCalledWith(bet);
+    expect(betId).toEqual({betId: bet.getBetId()});
   });
 
   it('should save a new bet with generated bet numbers', async () => {
@@ -81,9 +82,10 @@ describe('BetsService', () => {
       BetNumbers.fromPrimitives(betNumbersPrimitives),
     );
 
-    await betsService.execute(createBetRequest);
+    const betId = await betsService.execute(createBetRequest);
 
     expect(betsRepository.save).toHaveBeenCalledWith(bet);
+    expect(betId).toEqual({betId: bet.getBetId()});
 
   })
 });

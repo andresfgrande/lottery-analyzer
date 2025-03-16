@@ -5,6 +5,10 @@ export interface CreateBetRequestDto {
   generateBet: boolean;
 }
 
+export interface CreateBetResponseDto {
+  betId: string;
+}
+
 export interface GetBetRequestDto {
   betId: string;
 }
