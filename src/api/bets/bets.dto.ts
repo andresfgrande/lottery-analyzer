@@ -1,3 +1,4 @@
+import { BetInfo } from 'src/context/bets/services/getAllBetsInfo.service';
 import { BetNumbersPrimitives } from '../../context/bets/domain/betNumbers';
 
 export interface CreateBetRequestDto {
@@ -18,4 +19,8 @@ export interface GetBetResponseDto {
   creationDate: string;
   previousResults: string[];
   betNumbers: BetNumbersPrimitives;
+}
+
+export interface GetAllBetsInfoResponseDto {
+  bets: BetInfo[];
 }

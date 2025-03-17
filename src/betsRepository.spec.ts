@@ -92,11 +92,10 @@ describe('LotteryService should', () => {
       previousResults,
       new BetNumbers()
     );
-    const expectedRetrievedBet = bet.toPrimitives();
 
     await betsRepository.save(bet);
 
-    const retrievedBet = await betsRepository.get(betId);
+    const retrievedBet = await betsRepository.get(betId.toString());
     expect(retrievedBet).toStrictEqual(bet);
     await mongoService
       .getDatabase()
@@ -104,6 +103,57 @@ describe('LotteryService should', () => {
       .deleteOne({ betId: betId.toString() });
   })
 
-  //REMOVE
+  it('should return all bets info', async ()=>{
+    const betsRepository = new BetsRepository(mongoService);
+    const dateGenerator = new DateGenerator();
+    const previousResults: string[] = ['12345','64727','79176','94532','22984'];
+    const betId = new BetId(uuidv4());
+    const betId2 = new BetId(uuidv4());
+    const betId3 = new BetId(uuidv4());
+    const bet1 = new Bet(
+      betId,
+      new CreationDate(dateGenerator.getDate()),
+      previousResults,
+      new BetNumbers()
+    );
+    const bet2 = new Bet(
+      betId2,
+      new CreationDate(dateGenerator.getDate()),
+      previousResults,
+      new BetNumbers()
+    );
+    const bet3 = new Bet(
+      betId3,
+      new CreationDate(dateGenerator.getDate()),
+      previousResults,
+      new BetNumbers()
+    );
+    const expectedBets = [
+      {betId: bet1.getBetId(), creationDate: bet1.toPrimitives().creationDate},
+      {betId: bet2.getBetId(), creationDate: bet2.toPrimitives().creationDate}, 
+      {betId: bet3.getBetId(), creationDate: bet3.toPrimitives().creationDate}
+    ];
+
+    await betsRepository.save(bet1);
+    await betsRepository.save(bet2);
+    await betsRepository.save(bet3);
+    const bets = await betsRepository.getAllBetsInfo();
+
+    expect(bets).toHaveLength(3);
+    expect(bets).toEqual(expectedBets);
+    await mongoService
+      .getDatabase()
+      .collection('bets')
+      .deleteMany({ betId: { $in: [betId.toString(), betId2.toString(), betId3.toString()] } });
+  })
+
+  it('should return an empty array if there are no bets', async ()=>{
+    const betsRepository = new BetsRepository(mongoService);   
+
+    const bets = await betsRepository.getAllBetsInfo();    
+    
+    expect(bets).toHaveLength(0);
+    expect(bets).toEqual([]);
+  })
 
 });

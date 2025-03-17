@@ -2,7 +2,7 @@ import { MongoService } from '../../shared/services/mongo.service';
 import { Injectable } from '@nestjs/common';
 
 import { Bet, BetPrimitives } from '../domain/bet';
-import { BetId } from '../domain/betId';
+import { BetInfo } from '../services/getAllBetsInfo.service';
 
 @Injectable()
 export class BetsRepository {
@@ -19,11 +19,11 @@ export class BetsRepository {
       );
   }
 
-  async get(betId: BetId): Promise<Bet | undefined> {
+  async get(betId: string): Promise<Bet | undefined> {
     const savedBet = await this.mongoService
       .getDatabase()
       .collection('bets')
-      .findOne({ betId: betId.toString() });
+      .findOne({ betId: betId });
 
     if (!savedBet) {
       return undefined;
@@ -40,5 +40,15 @@ export class BetsRepository {
     };
 
     return Bet.fromPrimitives(betPrimitives);
+  }
+
+  async getAllBetsInfo():Promise<BetInfo[]>{
+    const savedBets = await this.mongoService.getDatabase().collection('bets').find().toArray();
+    return savedBets.map((bet)=>{
+      return { 
+        betId: bet.betId, 
+        creationDate: bet.creationDate 
+      } as BetInfo;
+    });
   }
 }
