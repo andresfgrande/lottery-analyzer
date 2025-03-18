@@ -9,7 +9,7 @@ import { Bet } from './context/bets/domain/bet';
 import { BetNumbers } from './context/bets/domain/betNumbers';
 import { v4 as uuidv4 } from 'uuid';
 
-describe('LotteryService should', () => {
+describe('BetsRepository should', () => {
   let mongoService: MongoService;
   let mongoClient: MongoClient;
 
@@ -116,18 +116,21 @@ describe('LotteryService should', () => {
       previousResults,
       new BetNumbers()
     );
+    bet1.generateBetNumbers();
     const bet2 = new Bet(
       betId2,
       new CreationDate(dateGenerator.getDate()),
       previousResults,
       new BetNumbers()
     );
+    bet2.generateBetNumbers();
     const bet3 = new Bet(
       betId3,
       new CreationDate(dateGenerator.getDate()),
       previousResults,
       new BetNumbers()
     );
+    bet3.generateBetNumbers();
     const expectedBets = [
       {betId: bet1.getBetId(), creationDate: bet1.toPrimitives().creationDate},
       {betId: bet2.getBetId(), creationDate: bet2.toPrimitives().creationDate}, 

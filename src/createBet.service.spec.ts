@@ -55,32 +55,14 @@ describe('BetsService', () => {
       previousResults: previousResults,
       generateBet: true,
     };
-    const excludedFirstPairs = new Set(["12", "64", "79", "94", "22"]);
-    const excludedLastPairs = new Set(["45", "27", "76", "32", "84"]);
-    const betNumbersPrimitives: BetNumbersPrimitives = {
-      firstPairNumbers: [],
-      lastPairNumbers: [],
-    } ;
-    for (let i = 0; i < 100; i++) {
-      const firstPair = i.toString().padStart(2, "0");
-      if (excludedFirstPairs.has(firstPair)) {
-        continue;
-      }
-      betNumbersPrimitives.firstPairNumbers.push(firstPair);
-    }
-    for (let j = 0; j < 100; j++) {
-      const lastPair = j.toString().padStart(2, "0");
-      if (excludedLastPairs.has(lastPair)) {
-        continue;
-      }
-      betNumbersPrimitives.lastPairNumbers.push(lastPair);
-    }
     const bet = new Bet(
       new BetId(uuidv4()),
       new CreationDate(dateGenerator.getDate()),
       previousResults,
-      BetNumbers.fromPrimitives(betNumbersPrimitives),
+      new BetNumbers(),
     );
+
+    bet.generateBetNumbers();
 
     const betId = await betsService.execute(createBetRequest);
 

@@ -32,8 +32,7 @@ export class BetsRepository {
     const betPrimitives: BetPrimitives = {
       betId: savedBet.betId,
       betNumbers: {
-        firstPairNumbers: savedBet.betNumbers.firstPairNumbers,
-        lastPairNumbers: savedBet.betNumbers.lastPairNumbers,
+        betNumberPairs: savedBet.betNumbers.betNumberPairs,
       },
       creationDate: savedBet.creationDate,
       previousResults: savedBet.previousResults,
