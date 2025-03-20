@@ -1,5 +1,5 @@
 import { NumberPair } from './numberPair';
-import { NumberPairList, NumberPairListPrimitives } from './NumberPairList';
+import { NumberPairList, NumberPairListPrimitives } from './numberPairList';
 
 export interface BetNumbersPrimitives{
   betNumberPairs: NumberPairListPrimitives[];
