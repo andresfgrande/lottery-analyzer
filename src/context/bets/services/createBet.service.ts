@@ -6,6 +6,7 @@ import { BetId } from '../domain/betId';
 import { Bet } from '../domain/bet';
 import { v4 as uuidv4 } from 'uuid';
 import { BetNumbers } from '../domain/betNumbers';
+import { Stats } from '../domain/stats';
 
 export interface CreateBetRequest {
   previousResults: string[];
@@ -27,11 +28,13 @@ export class CreateBetService {
     const bet = new Bet(new BetId(uuidv4()),
       new CreationDate(this.dateGenerator.getDate()),
       previousResults,
-      new BetNumbers()
+      new BetNumbers(),
+      new Stats()
     );
 
     if(generateBet) {
       bet.generateBetNumbers();
+      bet.generateStats();
     }
 
     await this.betsRepository.save(bet);

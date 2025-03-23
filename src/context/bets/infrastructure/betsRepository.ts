@@ -36,6 +36,7 @@ export class BetsRepository {
       },
       creationDate: savedBet.creationDate,
       previousResults: savedBet.previousResults,
+      stats: savedBet.stats,
     };
 
     return Bet.fromPrimitives(betPrimitives);

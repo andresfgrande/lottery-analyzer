@@ -8,6 +8,7 @@ import { BetId } from './context/bets/domain/betId';
 import { Bet } from './context/bets/domain/bet';
 import { BetNumbers } from './context/bets/domain/betNumbers';
 import { v4 as uuidv4 } from 'uuid';
+import { Stats } from './context/bets/domain/stats';
 
 describe('BetsRepository should', () => {
   let mongoService: MongoService;
@@ -39,7 +40,8 @@ describe('BetsRepository should', () => {
     const bet = new Bet(new BetId(uuidv4()),
       new CreationDate(dateGenerator.getDate()),
       previousResults,
-      new BetNumbers()
+      new BetNumbers(),
+      new Stats()
     );
     const expectedSavedBet = bet.toPrimitives();
 
@@ -63,7 +65,8 @@ describe('BetsRepository should', () => {
     const bet = new Bet(new BetId(uuidv4()),
       new CreationDate(dateGenerator.getDate()),
       previousResults,
-      new BetNumbers()
+      new BetNumbers(),
+      new Stats()
     );
     bet.generateBetNumbers();
     const expectedSavedBet = bet.toPrimitives();
@@ -90,7 +93,8 @@ describe('BetsRepository should', () => {
       betId,
       new CreationDate(dateGenerator.getDate()),
       previousResults,
-      new BetNumbers()
+      new BetNumbers(),
+      new Stats()
     );
 
     await betsRepository.save(bet);
@@ -114,21 +118,24 @@ describe('BetsRepository should', () => {
       betId,
       new CreationDate(dateGenerator.getDate()),
       previousResults,
-      new BetNumbers()
+      new BetNumbers(),
+      new Stats()
     );
     bet1.generateBetNumbers();
     const bet2 = new Bet(
       betId2,
       new CreationDate(dateGenerator.getDate()),
       previousResults,
-      new BetNumbers()
+      new BetNumbers(),
+      new Stats()
     );
     bet2.generateBetNumbers();
     const bet3 = new Bet(
       betId3,
       new CreationDate(dateGenerator.getDate()),
       previousResults,
-      new BetNumbers()
+      new BetNumbers(),
+      new Stats()
     );
     bet3.generateBetNumbers();
     const expectedBets = [
