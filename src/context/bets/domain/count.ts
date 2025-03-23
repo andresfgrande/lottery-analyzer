@@ -1,4 +1,3 @@
-
 export class Count {
   private count: number;
   constructor(count: number) {

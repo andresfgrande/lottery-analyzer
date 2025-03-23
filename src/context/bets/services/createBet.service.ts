@@ -13,26 +13,29 @@ export interface CreateBetRequest {
   generateBet: boolean;
 }
 
-export interface CreateBetResponse{
+export interface CreateBetResponse {
   betId: string;
 }
 
 @Injectable()
 export class CreateBetService {
-  constructor(private betsRepository: BetsRepository, private dateGenerator: DateGenerator) {}
+  constructor(
+    private betsRepository: BetsRepository,
+    private dateGenerator: DateGenerator,
+  ) {}
 
   async execute(createBetRequest: CreateBetRequest): Promise<CreateBetResponse> {
+    const { previousResults, generateBet } = createBetRequest;
 
-    const {previousResults, generateBet} = createBetRequest;
-
-    const bet = new Bet(new BetId(uuidv4()),
+    const bet = new Bet(
+      new BetId(uuidv4()),
       new CreationDate(this.dateGenerator.getDate()),
       previousResults,
       new BetNumbers(),
-      new Stats()
+      new Stats(),
     );
 
-    if(generateBet) {
+    if (generateBet) {
       bet.generateBetNumbers();
       bet.generateStats();
     }
@@ -40,7 +43,7 @@ export class CreateBetService {
     await this.betsRepository.save(bet);
 
     return {
-      betId: bet.getBetId()
-    }
+      betId: bet.getBetId(),
+    };
   }
 }

@@ -1,10 +1,8 @@
 import { NumberPair } from './numberPair';
 
-
-export class NumberPairListPrimitives{
-  pairList: string[]; 
+export class NumberPairListPrimitives {
+  pairList: string[];
 }
-
 
 export class NumberPairList {
   private pairList: NumberPair[];
@@ -21,18 +19,17 @@ export class NumberPairList {
     return {
       pairList: this.pairList.map((numberPair) => {
         return numberPair.toString();
-      }
-      )
+      }),
     };
   }
 
-  static fromPrimitives(numberPairListPrimitives: NumberPairListPrimitives): NumberPairList {
-
+  static fromPrimitives(
+    numberPairListPrimitives: NumberPairListPrimitives,
+  ): NumberPairList {
     const numberPairList: NumberPair[] = numberPairListPrimitives.pairList.map((num) => {
       return new NumberPair(num);
     });
 
     return new NumberPairList(numberPairList);
   }
-
 }

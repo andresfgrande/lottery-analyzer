@@ -15,19 +15,17 @@ export interface GetBetResponse {
 }
 
 @Injectable()
-export class GetBetService{
-  constructor(private betsRepository: BetsRepository){}
+export class GetBetService {
+  constructor(private betsRepository: BetsRepository) {}
 
   async execute(getBetRequest: GetBetRequest): Promise<GetBetResponse> {
-
     const { betId } = getBetRequest;
     const bet = await this.betsRepository.get(betId);
 
     if (!bet) {
-      throw new NotFoundException()
+      throw new NotFoundException();
     }
 
     return bet.toPrimitives();
   }
-
 }

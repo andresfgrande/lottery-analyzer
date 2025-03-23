@@ -1,10 +1,10 @@
 import { Count } from './count';
 import { NumberPair } from './numberPair';
 
-export interface NumberCountPrimitves{
+export interface NumberCountPrimitves {
   numberPair: string;
   count: number;
-};
+}
 
 export class NumberCount {
   private numberPair: NumberPair;
@@ -18,14 +18,16 @@ export class NumberCount {
   toPrimitives(): NumberCountPrimitves {
     return {
       numberPair: this.numberPair.toString(),
-      count: this.count.toValue()
+      count: this.count.toValue(),
     };
   }
 
-  static fromPrimitives(numberCountPrimitves: NumberCountPrimitves): NumberCount {
+  static fromPrimitives(
+    numberCountPrimitves: NumberCountPrimitves,
+  ): NumberCount {
     return new NumberCount(
       new NumberPair(numberCountPrimitves.numberPair),
-      new Count(numberCountPrimitves.count)
+      new Count(numberCountPrimitves.count),
     );
   }
 }

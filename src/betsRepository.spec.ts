@@ -36,12 +36,13 @@ describe('BetsRepository should', () => {
   it('be able to save a new bet without betNumbers', async () => {
     const lotteryRepository = new BetsRepository(mongoService);
     const dateGenerator = new DateGenerator();
-    const previousResults: string[] = ['12345','64727','79176','94532','22984'];
-    const bet = new Bet(new BetId(uuidv4()),
+    const previousResults: string[] = ['12345', '64727', '79176', '94532', '22984'];
+    const bet = new Bet(
+      new BetId(uuidv4()),
       new CreationDate(dateGenerator.getDate()),
       previousResults,
       new BetNumbers(),
-      new Stats()
+      new Stats(),
     );
     const expectedSavedBet = bet.toPrimitives();
 
@@ -50,7 +51,7 @@ describe('BetsRepository should', () => {
     const savedBet = await mongoService
       .getDatabase()
       .collection('bets')
-      .findOne({ betId:  bet.getBetId()});
+      .findOne({ betId: bet.getBetId() });
     expect(savedBet).toMatchObject(expectedSavedBet);
     await mongoService
       .getDatabase()
@@ -61,12 +62,13 @@ describe('BetsRepository should', () => {
   it('be able to save a new bet with betNumbers', async () => {
     const lotteryRepository = new BetsRepository(mongoService);
     const dateGenerator = new DateGenerator();
-    const previousResults: string[] = ['12345','64727','79176','94532','22984'];
-    const bet = new Bet(new BetId(uuidv4()),
+    const previousResults: string[] = ['12345', '64727', '79176', '94532', '22984'];
+    const bet = new Bet(
+      new BetId(uuidv4()),
       new CreationDate(dateGenerator.getDate()),
       previousResults,
       new BetNumbers(),
-      new Stats()
+      new Stats(),
     );
     bet.generateBetNumbers();
     const expectedSavedBet = bet.toPrimitives();
@@ -76,7 +78,7 @@ describe('BetsRepository should', () => {
     const savedBet = await mongoService
       .getDatabase()
       .collection('bets')
-      .findOne({ betId:  bet.getBetId()});
+      .findOne({ betId: bet.getBetId() });
     expect(savedBet).toMatchObject(expectedSavedBet);
     await mongoService
       .getDatabase()
@@ -87,14 +89,14 @@ describe('BetsRepository should', () => {
   it('should retrieve a bet by id', async () => {
     const betsRepository = new BetsRepository(mongoService);
     const dateGenerator = new DateGenerator();
-    const previousResults: string[] = ['12345','64727','79176','94532','22984'];
+    const previousResults: string[] = ['12345', '64727', '79176', '94532', '22984'];
     const betId = new BetId(uuidv4());
     const bet = new Bet(
       betId,
       new CreationDate(dateGenerator.getDate()),
       previousResults,
       new BetNumbers(),
-      new Stats()
+      new Stats(),
     );
 
     await betsRepository.save(bet);
@@ -105,12 +107,12 @@ describe('BetsRepository should', () => {
       .getDatabase()
       .collection('bets')
       .deleteOne({ betId: betId.toString() });
-  })
+  });
 
-  it('should return all bets info', async ()=>{
+  it('should return all bets info', async () => {
     const betsRepository = new BetsRepository(mongoService);
     const dateGenerator = new DateGenerator();
-    const previousResults: string[] = ['12345','64727','79176','94532','22984'];
+    const previousResults: string[] = ['12345', '64727', '79176', '94532', '22984'];
     const betId = new BetId(uuidv4());
     const betId2 = new BetId(uuidv4());
     const betId3 = new BetId(uuidv4());
@@ -119,7 +121,7 @@ describe('BetsRepository should', () => {
       new CreationDate(dateGenerator.getDate()),
       previousResults,
       new BetNumbers(),
-      new Stats()
+      new Stats(),
     );
     bet1.generateBetNumbers();
     const bet2 = new Bet(
@@ -127,7 +129,7 @@ describe('BetsRepository should', () => {
       new CreationDate(dateGenerator.getDate()),
       previousResults,
       new BetNumbers(),
-      new Stats()
+      new Stats(),
     );
     bet2.generateBetNumbers();
     const bet3 = new Bet(
@@ -135,13 +137,13 @@ describe('BetsRepository should', () => {
       new CreationDate(dateGenerator.getDate()),
       previousResults,
       new BetNumbers(),
-      new Stats()
+      new Stats(),
     );
     bet3.generateBetNumbers();
     const expectedBets = [
-      {betId: bet1.getBetId(), creationDate: bet1.toPrimitives().creationDate},
-      {betId: bet2.getBetId(), creationDate: bet2.toPrimitives().creationDate}, 
-      {betId: bet3.getBetId(), creationDate: bet3.toPrimitives().creationDate}
+      { betId: bet1.getBetId(), creationDate: bet1.toPrimitives().creationDate },
+      { betId: bet2.getBetId(), creationDate: bet2.toPrimitives().creationDate },
+      { betId: bet3.getBetId(), creationDate: bet3.toPrimitives().creationDate },
     ];
 
     await betsRepository.save(bet1);
@@ -154,16 +156,17 @@ describe('BetsRepository should', () => {
     await mongoService
       .getDatabase()
       .collection('bets')
-      .deleteMany({ betId: { $in: [betId.toString(), betId2.toString(), betId3.toString()] } });
-  })
+      .deleteMany({
+        betId: { $in: [betId.toString(), betId2.toString(), betId3.toString()] },
+      });
+  });
 
-  it('should return an empty array if there are no bets', async ()=>{
-    const betsRepository = new BetsRepository(mongoService);   
+  it('should return an empty array if there are no bets', async () => {
+    const betsRepository = new BetsRepository(mongoService);
 
-    const bets = await betsRepository.getAllBetsInfo();    
-    
+    const bets = await betsRepository.getAllBetsInfo();
+
     expect(bets).toHaveLength(0);
     expect(bets).toEqual([]);
-  })
-
+  });
 });

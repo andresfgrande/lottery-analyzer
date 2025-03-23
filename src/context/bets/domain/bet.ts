@@ -62,6 +62,6 @@ export class Bet {
   }
 
   generateStats(): void {
-   this.stats.generateStats(this.previousResults);
+    this.stats.generateStats(this.previousResults);
   }
 }

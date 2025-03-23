@@ -1,6 +1,5 @@
 export class BetId {
-  constructor(private id: string) {
-  }
+  constructor(private id: string) {}
   toString(): string {
     return this.id;
   }

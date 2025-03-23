@@ -8,7 +8,13 @@ import { GetAllBetsInfoService } from './services/getAllBetsInfo.service';
 
 @Module({
   imports: [SharedModule],
-  providers: [CreateBetService, BetsRepository, DateGenerator, GetBetService, GetAllBetsInfoService],
+  providers: [
+    CreateBetService,
+    BetsRepository,
+    DateGenerator,
+    GetBetService,
+    GetAllBetsInfoService,
+  ],
   exports: [CreateBetService, GetBetService, GetAllBetsInfoService],
 })
 export class BetsModule {}

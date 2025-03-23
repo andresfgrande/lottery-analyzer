@@ -51,4 +51,13 @@ export class BetsRepository {
       } as BetInfo;
     });
   }
+
+  async deleteBet(betId: string): Promise<void> {
+    /*await this.mongoService
+      .getDatabase()
+      .collection('bets')
+      .deleteOne({ betId:
+        betId
+      });*/
+  }
 }
