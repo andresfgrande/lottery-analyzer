@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import {
@@ -50,5 +51,10 @@ export class BetsController {
   @Delete(':betId')
   async deleteBet(@Param('betId') betId: string): Promise<void> {
     return await this.deleteBetService.execute({ betId });
+  }
+
+  @Put(':betId')
+  async updateBet(@Param('betId') betId: string): Promise<void> {
+    //TODO
   }
 }
