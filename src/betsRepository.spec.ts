@@ -169,4 +169,34 @@ describe('BetsRepository should', () => {
     expect(bets).toHaveLength(0);
     expect(bets).toEqual([]);
   });
+
+  it('should delete a bet by id', async () => {
+    const betsRepository = new BetsRepository(mongoService);
+    const dateGenerator = new DateGenerator();
+    const previousResults: string[] = ['12345', '64727', '79176', '94532', '22984'];
+    const betId = new BetId(uuidv4());
+    const bet = new Bet(
+      betId,
+      new CreationDate(dateGenerator.getDate()),
+      previousResults,
+      new BetNumbers(),
+      new Stats(),
+    );
+    bet.generateBetNumbers();
+    bet.generateStats();
+    await mongoService.getDatabase().collection('bets').insertOne(bet.toPrimitives()); 
+  
+    await betsRepository.deleteBet(betId.toString()); 
+
+    const deletedBet = await mongoService 
+    .getDatabase()
+    .collection('bets')
+    .findOne({ betId: betId.toString() });   
+    expect(deletedBet).toBeNull();
+    
+    await mongoService
+    .getDatabase()
+    .collection('bets')
+    .deleteOne({ betId: betId.toString() });
+  });
 });

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { BetsRepository } from '../infrastructure/betsRepository';
 
 export interface DeleteRequest {
@@ -6,10 +6,16 @@ export interface DeleteRequest {
 }
 
 @Injectable()
-export class DeleteService {
+export class DeleteBetService {
   constructor(private betsRepository: BetsRepository) {}
 
   async execute(deleteRequest: DeleteRequest): Promise<void> {
-    //TODO
+    const { betId } = deleteRequest;
+
+    const response = await this.betsRepository.deleteBet(betId);
+
+    if (!response) {
+      throw new NotFoundException();
+    }
   }
 }

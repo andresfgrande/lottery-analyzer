@@ -10,10 +10,6 @@ export interface CreateBetResponseDto {
   betId: string;
 }
 
-export interface GetBetRequestDto {
-  betId: string;
-}
-
 export interface GetBetResponseDto {
   betId: string;
   creationDate: string;

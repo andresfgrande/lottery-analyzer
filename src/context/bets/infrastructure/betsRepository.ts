@@ -52,12 +52,16 @@ export class BetsRepository {
     });
   }
 
-  async deleteBet(betId: string): Promise<void> {
-    /*await this.mongoService
+  async deleteBet(betId: string): Promise<string | undefined> {
+    const response = await this.mongoService
       .getDatabase()
       .collection('bets')
       .deleteOne({ betId:
         betId
-      });*/
+      });
+
+      const deletedBetId = response.deletedCount === 1 ? betId : undefined;
+
+      return deletedBetId;
   }
 }

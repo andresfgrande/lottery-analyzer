@@ -14,13 +14,12 @@ import {
 import { GetBetService } from '../../context/bets/services/getBet.service';
 import {
   CreateBetRequestDto,
-  GetBetRequestDto,
   GetBetResponseDto,
   CreateBetResponseDto,
   GetAllBetsInfoResponseDto,
 } from './bets.dto';
 import { GetAllBetsInfoService } from 'src/context/bets/services/getAllBetsInfo.service';
-import { DeleteService } from 'src/context/bets/services/deleteBet.service';
+import { DeleteBetService } from 'src/context/bets/services/deleteBet.service';
 
 @Controller('bets')
 export class BetsController {
@@ -28,7 +27,7 @@ export class BetsController {
     private createBetService: CreateBetService,
     private getBetService: GetBetService,
     private getAllBetsInfoService: GetAllBetsInfoService,
-    private deleteBetService: DeleteService,
+    private deleteBetService: DeleteBetService,
   ) {}
 
   @Post()
