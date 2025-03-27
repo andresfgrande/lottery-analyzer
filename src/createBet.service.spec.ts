@@ -51,7 +51,7 @@ describe('BetsService', () => {
 
     const betId = await betsService.execute(createBetRequest);
 
-    expect(betsRepository.save).toHaveBeenCalledWith(expectedBet);
+    expect(betsRepository.saveBet).toHaveBeenCalledWith(expectedBet);
     expect(betId).toEqual({ betId: expectedBet.getBetId() });
   });
 
@@ -565,7 +565,7 @@ describe('BetsService', () => {
 
     const betId = await betsService.execute(createBetRequest);
 
-    expect(betsRepository.save).toHaveBeenCalledWith(expectedBet);
+    expect(betsRepository.saveBet).toHaveBeenCalledWith(expectedBet);
     expect(betId).toEqual({ betId: expectedBet.getBetId() });
   });
 });

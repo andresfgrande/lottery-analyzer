@@ -6,6 +6,7 @@ import { DateGenerator } from './infrastructure/dateGenerator';
 import { GetBetService } from './services/getBet.service';
 import { GetAllBetsInfoService } from './services/getAllBetsInfo.service';
 import { DeleteBetService } from './services/deleteBet.service';
+import { UpdateBetService } from './services/updateBet.service';
 
 @Module({
   imports: [SharedModule],
@@ -16,7 +17,14 @@ import { DeleteBetService } from './services/deleteBet.service';
     GetBetService,
     GetAllBetsInfoService,
     DeleteBetService,
+    UpdateBetService,
   ],
-  exports: [CreateBetService, GetBetService, GetAllBetsInfoService, DeleteBetService],
+  exports: [
+    CreateBetService,
+    GetBetService,
+    GetAllBetsInfoService,
+    DeleteBetService,
+    UpdateBetService,
+  ],
 })
 export class BetsModule {}

@@ -17,6 +17,7 @@ describe('DeleteBetService', () => {
         const deleteRequest = {
             betId: uuidv4()
         };
+        betsRepository.deleteBet.mockResolvedValue(deleteRequest.betId);
 
         await deleteBetService.execute(deleteRequest);
 

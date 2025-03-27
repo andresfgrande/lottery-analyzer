@@ -46,7 +46,7 @@ describe('BetsRepository should', () => {
     );
     const expectedSavedBet = bet.toPrimitives();
 
-    await lotteryRepository.save(bet);
+    await lotteryRepository.saveBet(bet);
 
     const savedBet = await mongoService
       .getDatabase()
@@ -73,7 +73,7 @@ describe('BetsRepository should', () => {
     bet.generateBetNumbers();
     const expectedSavedBet = bet.toPrimitives();
 
-    await lotteryRepository.save(bet);
+    await lotteryRepository.saveBet(bet);
 
     const savedBet = await mongoService
       .getDatabase()
@@ -99,9 +99,9 @@ describe('BetsRepository should', () => {
       new Stats(),
     );
 
-    await betsRepository.save(bet);
+    await betsRepository.saveBet(bet);
 
-    const retrievedBet = await betsRepository.get(betId.toString());
+    const retrievedBet = await betsRepository.getBet(betId.toString());
     expect(retrievedBet).toStrictEqual(bet);
     await mongoService
       .getDatabase()
@@ -146,9 +146,9 @@ describe('BetsRepository should', () => {
       { betId: bet3.getBetId(), creationDate: bet3.toPrimitives().creationDate },
     ];
 
-    await betsRepository.save(bet1);
-    await betsRepository.save(bet2);
-    await betsRepository.save(bet3);
+    await betsRepository.saveBet(bet1);
+    await betsRepository.saveBet(bet2);
+    await betsRepository.saveBet(bet3);
     const bets = await betsRepository.getAllBetsInfo();
 
     expect(bets).toHaveLength(3);
@@ -184,19 +184,19 @@ describe('BetsRepository should', () => {
     );
     bet.generateBetNumbers();
     bet.generateStats();
-    await mongoService.getDatabase().collection('bets').insertOne(bet.toPrimitives()); 
-  
-    await betsRepository.deleteBet(betId.toString()); 
+    await mongoService.getDatabase().collection('bets').insertOne(bet.toPrimitives());
 
-    const deletedBet = await mongoService 
-    .getDatabase()
-    .collection('bets')
-    .findOne({ betId: betId.toString() });   
+    await betsRepository.deleteBet(betId.toString());
+
+    const deletedBet = await mongoService
+      .getDatabase()
+      .collection('bets')
+      .findOne({ betId: betId.toString() });
     expect(deletedBet).toBeNull();
-    
+
     await mongoService
-    .getDatabase()
-    .collection('bets')
-    .deleteOne({ betId: betId.toString() });
+      .getDatabase()
+      .collection('bets')
+      .deleteOne({ betId: betId.toString() });
   });
 });

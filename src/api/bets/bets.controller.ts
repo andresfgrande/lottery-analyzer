@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import {
   CreateBetResponse,
   CreateBetService,
@@ -18,9 +9,11 @@ import {
   GetBetResponseDto,
   CreateBetResponseDto,
   GetAllBetsInfoResponseDto,
+  UpdateBetRequestDto,
 } from './bets.dto';
 import { GetAllBetsInfoService } from 'src/context/bets/services/getAllBetsInfo.service';
 import { DeleteBetService } from 'src/context/bets/services/deleteBet.service';
+import { UpdateBetService } from 'src/context/bets/services/updateBet.service';
 
 @Controller('bets')
 export class BetsController {
@@ -29,6 +22,7 @@ export class BetsController {
     private getBetService: GetBetService,
     private getAllBetsInfoService: GetAllBetsInfoService,
     private deleteBetService: DeleteBetService,
+    private updateBetService: UpdateBetService,
   ) {}
 
   @Post()
@@ -54,7 +48,15 @@ export class BetsController {
   }
 
   @Put(':betId')
-  async updateBet(@Param('betId') betId: string): Promise<void> {
-    //TODO
+  async updateBet(
+    @Param('betId') betId: string,
+    @Body() updateBetRequestDto: UpdateBetRequestDto,
+  ): Promise<void> {
+    const { previousResults } = updateBetRequestDto;
+
+    return await this.updateBetService.execute({
+      betId: betId,
+      previousResults: previousResults,
+    });
   }
 }

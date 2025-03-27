@@ -20,3 +20,7 @@ export interface GetBetResponseDto {
 export interface GetAllBetsInfoResponseDto {
   bets: BetInfo[];
 }
+
+export interface UpdateBetRequestDto {
+  previousResults: string[];
+}

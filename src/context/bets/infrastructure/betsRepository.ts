@@ -8,7 +8,7 @@ import { BetInfo } from '../services/getAllBetsInfo.service';
 export class BetsRepository {
   constructor(private mongoService: MongoService) {}
 
-  async save(bet: Bet): Promise<void> {
+  async saveBet(bet: Bet): Promise<void> {
     await this.mongoService
       .getDatabase()
       .collection('bets')
@@ -19,7 +19,7 @@ export class BetsRepository {
       );
   }
 
-  async get(betId: string): Promise<Bet | undefined> {
+  async getBet(betId: string): Promise<Bet | undefined> {
     const savedBet = await this.mongoService
       .getDatabase()
       .collection('bets')
@@ -42,12 +42,16 @@ export class BetsRepository {
     return Bet.fromPrimitives(betPrimitives);
   }
 
-  async getAllBetsInfo():Promise<BetInfo[]>{
-    const savedBets = await this.mongoService.getDatabase().collection('bets').find().toArray();
-    return savedBets.map((bet)=>{
-      return { 
-        betId: bet.betId, 
-        creationDate: bet.creationDate 
+  async getAllBetsInfo(): Promise<BetInfo[]> {
+    const savedBets = await this.mongoService
+      .getDatabase()
+      .collection('bets')
+      .find()
+      .toArray();
+    return savedBets.map((bet) => {
+      return {
+        betId: bet.betId,
+        creationDate: bet.creationDate,
       } as BetInfo;
     });
   }
@@ -56,12 +60,10 @@ export class BetsRepository {
     const response = await this.mongoService
       .getDatabase()
       .collection('bets')
-      .deleteOne({ betId:
-        betId
-      });
+      .deleteOne({ betId: betId });
 
-      const deletedBetId = response.deletedCount === 1 ? betId : undefined;
+    const deletedBetId = response.deletedCount === 1 ? betId : undefined;
 
-      return deletedBetId;
+    return deletedBetId;
   }
 }

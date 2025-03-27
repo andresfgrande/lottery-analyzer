@@ -28,7 +28,7 @@ describe('GetBetService', () => {
       },
     };
     const expectedRetrievedBet = Bet.fromPrimitives(betPrimitives);
-    betsRepository.get.mockResolvedValue(expectedRetrievedBet);
+    betsRepository.getBet.mockResolvedValue(expectedRetrievedBet);
 
     const betResponse = await getBetService.execute(getBetRequest);
 
@@ -40,7 +40,7 @@ describe('GetBetService', () => {
       betId: '05901778-62c2-4dee-91a2-28765214e075',
     };
 
-    betsRepository.get.mockResolvedValue(undefined);
+    betsRepository.getBet.mockResolvedValue(undefined);
 
     await expect(getBetService.execute(getBetRequest)).rejects.toThrow(NotFoundException);
   });

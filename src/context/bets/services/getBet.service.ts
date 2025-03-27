@@ -20,7 +20,7 @@ export class GetBetService {
 
   async execute(getBetRequest: GetBetRequest): Promise<GetBetResponse> {
     const { betId } = getBetRequest;
-    const bet = await this.betsRepository.get(betId);
+    const bet = await this.betsRepository.getBet(betId);
 
     if (!bet) {
       throw new NotFoundException();

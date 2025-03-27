@@ -40,7 +40,7 @@ export class CreateBetService {
       bet.generateStats();
     }
 
-    await this.betsRepository.save(bet);
+    await this.betsRepository.saveBet(bet);
 
     return {
       betId: bet.getBetId(),

@@ -64,4 +64,8 @@ export class Bet {
   generateStats(): void {
     this.stats.generateStats(this.previousResults);
   }
+
+  updatePreviousResults(previousResults: string[]): void{
+    this.previousResults = previousResults;
+  }
 }
