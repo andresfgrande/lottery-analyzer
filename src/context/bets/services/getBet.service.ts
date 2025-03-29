@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { BetsRepository } from '../infrastructure/betsRepository';
 import { BetNumbersPrimitives } from '../domain/betNumbers';
 import { BetId } from '../domain/betId';
+import { StatsPrimitives } from '../domain/stats';
 
 export interface GetBetRequest {
   betId: string;
@@ -12,6 +13,7 @@ export interface GetBetResponse {
   creationDate: string;
   previousResults: string[];
   betNumbers: BetNumbersPrimitives;
+  stats: StatsPrimitives;
 }
 
 @Injectable()

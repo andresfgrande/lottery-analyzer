@@ -1,6 +1,6 @@
 import { NumberPair } from './numberPair';
 
-export class NumberPairListPrimitives {
+export interface NumberPairListPrimitives {
   pairList: string[];
 }
 
