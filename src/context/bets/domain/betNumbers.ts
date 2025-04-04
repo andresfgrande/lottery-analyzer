@@ -64,4 +64,16 @@ export class BetNumbers {
       }
     }
   }
+
+  getPairsOfEqualNumbers(columnIndex: number): NumberPairList {
+    return this.betNumberPairs[columnIndex].getSameDigitNumberPairList();
+  }
+
+  getPairsStartingByNumber(columnIndex: number, number: string): NumberPairList {
+    return this.betNumberPairs[columnIndex].getNumberPairListStartingByNumber(number);
+  }
+
+  getBetNumbersLength(): number {
+    return this.betNumberPairs.length;
+  }
 }

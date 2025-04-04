@@ -1,6 +1,7 @@
 import { BetInfo } from 'src/context/bets/services/getAllBetsInfo.service';
 import { BetNumbersPrimitives } from '../../context/bets/domain/betNumbers';
 import { StatsPrimitives } from 'src/context/bets/domain/stats';
+import { Guesses, GuessesPrimitives } from 'src/context/bets/domain/Guesses';
 
 export interface CreateBetRequestDto {
   previousResults: string[];
@@ -17,6 +18,7 @@ export interface GetBetResponseDto {
   previousResults: string[];
   betNumbers: BetNumbersPrimitives;
   stats: StatsPrimitives;
+  guesses: GuessesPrimitives;
 }
 
 export interface GetAllBetsInfoResponseDto {

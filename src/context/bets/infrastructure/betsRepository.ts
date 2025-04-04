@@ -37,6 +37,7 @@ export class BetsRepository {
       creationDate: savedBet.creationDate,
       previousResults: savedBet.previousResults,
       stats: savedBet.stats,
+      guesses: savedBet.guesses,
     };
 
     return Bet.fromPrimitives(betPrimitives);

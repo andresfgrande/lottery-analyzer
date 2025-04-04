@@ -3,6 +3,7 @@ import { BetsRepository } from '../infrastructure/betsRepository';
 import { BetNumbersPrimitives } from '../domain/betNumbers';
 import { BetId } from '../domain/betId';
 import { StatsPrimitives } from '../domain/stats';
+import { GuessesPrimitives } from '../domain/Guesses';
 
 export interface GetBetRequest {
   betId: string;
@@ -14,6 +15,7 @@ export interface GetBetResponse {
   previousResults: string[];
   betNumbers: BetNumbersPrimitives;
   stats: StatsPrimitives;
+  guesses: GuessesPrimitives;
 }
 
 @Injectable()

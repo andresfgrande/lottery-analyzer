@@ -32,4 +32,20 @@ export class NumberPairList {
 
     return new NumberPairList(numberPairList);
   }
+
+  getSameDigitNumberPairList(): NumberPairList {
+    const numberPairList = this.pairList.filter(
+      (num) => num.getFirstNumber() === num.getSecondNumber(),
+    );
+    return new NumberPairList(numberPairList);
+  }
+
+  getNumberPairListStartingByNumber(number: string): NumberPairList {
+    const numberPairList = this.pairList.filter((num) => num.getFirstNumber() === number);
+    return new NumberPairList(numberPairList);
+  }
+
+  getNumberPairList(): NumberPair[] {
+    return this.pairList;
+  }
 }
