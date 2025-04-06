@@ -12,4 +12,8 @@ export class GuessNumber {
   concatNumber(number: string): void {
     this.number = this.number.concat(number);
   }
+
+  getLastDigit(): string {
+    return this.number[this.number.length - 1];
+  }
 }

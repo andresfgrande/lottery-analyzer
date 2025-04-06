@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MongoService } from './services/mongo.service';
 import { MongoClient } from 'mongodb';
+import configuration from '../../config/configurations';
 
 const mongoClient = {
   provide: MongoClient,
   useFactory: async () => {
-    return new MongoClient('mongodb://root:example@localhost:27017/');
+    return new MongoClient(configuration().database.uri);
   },
 };
 

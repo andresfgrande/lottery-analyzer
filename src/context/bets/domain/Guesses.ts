@@ -29,35 +29,53 @@ export class Guesses {
   }
 
   generateGuesses(betNumbers: BetNumbers): void {
-    this.guessList = [];
+    //TODO REFACTOR
     const firstColumnIndex = 0;
 
-    //STEP 1
     const firstColumnEqualPairsAux = betNumbers.getPairsOfEqualNumbers(firstColumnIndex);
 
-    //STEP 2
-    const auxList: string[] = [];
+    const auxGuessList: GuessNumber[] = [];
     firstColumnEqualPairsAux.getNumberPairList().forEach((equalPair) => {
       const auxPairsStartingByNumber = betNumbers.getPairsStartingByNumber(
         1,
         equalPair.getSecondNumber(),
       );
 
-      console.log(auxPairsStartingByNumber.toPrimitives());
-
-      auxPairsStartingByNumber.getNumberPairList().forEach((pair) => {
+      auxPairsStartingByNumber.getNumberPairList().forEach((pairColumn1) => {
         const newGuessNumber = new GuessNumber(equalPair.toString());
-        newGuessNumber.concatNumber(pair.getSecondNumber());
-        this.guessList.push(newGuessNumber);
+        newGuessNumber.concatNumber(pairColumn1.getSecondNumber());
+        auxGuessList.push(newGuessNumber);
       });
     });
 
-    console.log(this.guessList);
+    const auxGuessList2: GuessNumber[] = [];
+    auxGuessList.forEach((guessNumber) => {
+      const auxPairsStartingByNumber = betNumbers.getPairsStartingByNumber(
+        2,
+        guessNumber.getLastDigit(),
+      );
 
-    /*
-    this.guessList = firstColumnEqualPairs.toPrimitives().pairList.map((pair) => {
-      return new GuessNumber(pair);
+      auxPairsStartingByNumber.getNumberPairList().forEach((pairColumn2) => {
+        const newGuessNumber = new GuessNumber(guessNumber.toString());
+        newGuessNumber.concatNumber(pairColumn2.getSecondNumber());
+        auxGuessList2.push(newGuessNumber);
+      });
     });
-    */
+
+    const auxGuessList3: GuessNumber[] = [];
+    auxGuessList2.forEach((guessNumber) => {
+      const auxPairsStartingByNumber = betNumbers.getPairsStartingByNumber(
+        3,
+        guessNumber.getLastDigit(),
+      );
+
+      auxPairsStartingByNumber.getNumberPairList().forEach((pairColumn3) => {
+        const newGuessNumber = new GuessNumber(guessNumber.toString());
+        newGuessNumber.concatNumber(pairColumn3.getSecondNumber());
+        auxGuessList3.push(newGuessNumber);
+      });
+    });
+
+    this.guessList = auxGuessList3;
   }
 }

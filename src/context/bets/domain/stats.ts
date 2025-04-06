@@ -31,34 +31,36 @@ export class Stats {
   }
 
   generateStats(previousResults: string[]): void {
-    this.statsCollection = [
-      new NumberCountList(),
-      new NumberCountList(),
-      new NumberCountList(),
-      new NumberCountList(),
-    ];
+    const statsCount = 4;
 
-    const excludedPairs = [
-      new Set(previousResults.map((num) => num.slice(0, 2))),
-      new Set(previousResults.map((num) => num.slice(1, 3))),
-      new Set(previousResults.map((num) => num.slice(2, 4))),
-      new Set(previousResults.map((num) => num.slice(3, 5))),
-    ];
+    this.statsCollection = Array(statsCount)
+      .fill(null)
+      .map(() => new NumberCountList());
 
-    excludedPairs.forEach((pairSet, index) => {
-      const pairCounts = previousResults.reduce(
-        (acc, result) => {
-          const pair = result.slice(index, index + 2);
-          acc[pair] = (acc[pair] || 0) + 1;
-          return acc;
-        },
-        {} as Record<string, number>,
-      );
+    this.populateStatsCollection(previousResults, statsCount);
+  }
 
+  private populateStatsCollection(previousResults: string[], statsCount: number): void {
+    const pairCountsByPosition = this.getPairCountsByPosition(previousResults, statsCount);
+
+    pairCountsByPosition.forEach((pairCounts, index) => {
       Object.entries(pairCounts).forEach(([numberPair, count]) => {
         const numberCount = new NumberCount(new NumberPair(numberPair), new Count(count));
         this.statsCollection[index].addNumberCount(numberCount);
       });
     });
+  }
+
+  private getPairCountsByPosition(
+    previousResults: string[],
+    statsCount: number
+  ): Record<string, number>[] {
+    return Array.from({ length: statsCount }, (_, index) =>
+      previousResults.reduce((acc, result) => {
+        const pair = result.slice(index, index + 2);
+        acc[pair] = (acc[pair] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>)
+    );
   }
 }

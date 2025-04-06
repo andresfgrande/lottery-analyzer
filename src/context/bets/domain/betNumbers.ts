@@ -30,38 +30,34 @@ export class BetNumbers {
   }
 
   generateBetNumberPairs(previousResults: string[]): void {
-    this.betNumberPairs = [
-      new NumberPairList(),
-      new NumberPairList(),
-      new NumberPairList(),
-      new NumberPairList(),
-    ];
+    const pairCount = 4;
+    const maxNumber = 100; 
 
-    const excludedPairs = [
-      new Set(previousResults.map((num) => num.slice(0, 2))),
-      new Set(previousResults.map((num) => num.slice(1, 3))),
-      new Set(previousResults.map((num) => num.slice(2, 4))),
-      new Set(previousResults.map((num) => num.slice(3, 5))),
-    ];
+    this.betNumberPairs = Array(pairCount)
+      .fill(null)
+      .map(() => new NumberPairList());
 
-    for (let i = 0; i < 100; i++) {
+    const excludedPairs = this.getExcludedPairs(previousResults, pairCount);
+
+    this.populateBetNumberPairs(excludedPairs, maxNumber);
+  }
+
+  private getExcludedPairs(previousResults: string[], pairCount: number): Set<string>[] {
+    return Array.from({ length: pairCount }, (_, index) =>
+      new Set(
+        previousResults.map((num) => num.slice(index, index + 2))
+      )
+    );
+  }
+
+  private populateBetNumberPairs(excludedPairs: Set<string>[], maxNumber: number): void {
+    for (let i = 0; i < maxNumber; i++) {
       const pairStr = i.toString().padStart(2, '0');
-
-      if (!excludedPairs[0].has(pairStr)) {
-        this.betNumberPairs[0].addNumberPair(new NumberPair(pairStr));
-      }
-
-      if (!excludedPairs[1].has(pairStr)) {
-        this.betNumberPairs[1].addNumberPair(new NumberPair(pairStr));
-      }
-
-      if (!excludedPairs[2].has(pairStr)) {
-        this.betNumberPairs[2].addNumberPair(new NumberPair(pairStr));
-      }
-
-      if (!excludedPairs[3].has(pairStr)) {
-        this.betNumberPairs[3].addNumberPair(new NumberPair(pairStr));
-      }
+      excludedPairs.forEach((excludedSet, index) => {
+        if (!excludedSet.has(pairStr)) {
+          this.betNumberPairs[index].addNumberPair(new NumberPair(pairStr));
+        }
+      });
     }
   }
 
