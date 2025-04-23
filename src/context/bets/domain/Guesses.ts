@@ -1,5 +1,7 @@
 import { BetNumbers } from './betNumbers';
 import { GuessNumber } from './GuessNumber';
+import { NumberPair } from './numberPair';
+import { NumberPairList } from './numberPairList';
 
 export interface GuessesPrimitives {
   guessList: string[];
@@ -32,8 +34,19 @@ export class Guesses {
     //TODO REFACTOR
     const firstColumnIndex = 0;
 
-    const firstColumnEqualPairsAux = betNumbers.getPairsOfEqualNumbers(firstColumnIndex);
-
+   // const firstColumnEqualPairsAux = betNumbers.getPairsOfEqualNumbers(firstColumnIndex);
+    const firstColumnEqualPairsAux = new NumberPairList([
+      new NumberPair('00'),
+      new NumberPair('11'),
+      new NumberPair('22'),
+      new NumberPair('33'),
+      new NumberPair('44'),
+      new NumberPair('55'),
+      new NumberPair('66'),
+      new NumberPair('77'),
+      new NumberPair('88'),
+      new NumberPair('99'),
+    ]);
     const auxGuessList: GuessNumber[] = [];
     firstColumnEqualPairsAux.getNumberPairList().forEach((equalPair) => {
       const auxPairsStartingByNumber = betNumbers.getPairsStartingByNumber(
