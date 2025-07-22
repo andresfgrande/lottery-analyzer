@@ -9,6 +9,7 @@ import { Bet } from './context/bets/domain/bet';
 import { BetNumbers } from './context/bets/domain/betNumbers';
 import { v4 as uuidv4 } from 'uuid';
 import { Stats } from './context/bets/domain/stats';
+import { Guesses } from './context/bets/domain/Guesses';
 
 describe('BetsRepository should', () => {
   let mongoService: MongoService;
@@ -43,6 +44,7 @@ describe('BetsRepository should', () => {
       previousResults,
       new BetNumbers(),
       new Stats(),
+      new Guesses()
     );
     const expectedSavedBet = bet.toPrimitives();
 
@@ -69,6 +71,7 @@ describe('BetsRepository should', () => {
       previousResults,
       new BetNumbers(),
       new Stats(),
+      new Guesses()
     );
     bet.generateBetNumbers();
     const expectedSavedBet = bet.toPrimitives();
@@ -97,6 +100,7 @@ describe('BetsRepository should', () => {
       previousResults,
       new BetNumbers(),
       new Stats(),
+      new Guesses()
     );
 
     await betsRepository.saveBet(bet);
@@ -122,6 +126,7 @@ describe('BetsRepository should', () => {
       previousResults,
       new BetNumbers(),
       new Stats(),
+      new Guesses()
     );
     bet1.generateBetNumbers();
     const bet2 = new Bet(
@@ -130,6 +135,7 @@ describe('BetsRepository should', () => {
       previousResults,
       new BetNumbers(),
       new Stats(),
+      new Guesses()
     );
     bet2.generateBetNumbers();
     const bet3 = new Bet(
@@ -138,6 +144,7 @@ describe('BetsRepository should', () => {
       previousResults,
       new BetNumbers(),
       new Stats(),
+      new Guesses() 
     );
     bet3.generateBetNumbers();
     const expectedBets = [
@@ -181,6 +188,7 @@ describe('BetsRepository should', () => {
       previousResults,
       new BetNumbers(),
       new Stats(),
+      new Guesses()
     );
     bet.generateBetNumbers();
     bet.generateStats();

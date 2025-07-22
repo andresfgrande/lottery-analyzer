@@ -1,5 +1,6 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Db, MongoClient } from 'mongodb';
+import configuration from '../../../config/configurations';
 
 @Injectable()
 export class MongoService implements OnModuleInit, OnModuleDestroy {
@@ -14,6 +15,6 @@ export class MongoService implements OnModuleInit, OnModuleDestroy {
   }
 
   getDatabase(): Db {
-    return this.client.db('lottery');
+    return this.client.db(configuration().database.dbName);
   }
 }
