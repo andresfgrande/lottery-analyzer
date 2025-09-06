@@ -23,6 +23,7 @@ export class UpdateBetService {
     savedBet.updatePreviousResults(previousResults);
     savedBet.generateBetNumbers();
     savedBet.generateStats();
+    savedBet.generateGuesses();
 
     await this.betsRepository.saveBet(savedBet);
   }
